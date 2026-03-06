@@ -2,6 +2,10 @@ pipeline {
     agent {
     label 'aws-agent'
     }
+    tools {
+        maven 'maven3'
+        jdk 'JDK17'
+    }
     stages {
         stage('Build') {
             steps {

@@ -7,11 +7,11 @@ pipeline {
         jdk 'JDK17'
     }
     stages {
-        stage('Build') {
+        stage('Compile') {
             steps {
             script {
-                sh 'echo "Building the application..."'
-                sh 'mvn clean package' 
+                sh 'echo "Compiling the application..."'
+                sh 'mvn clean compile' 
               }
             }
           }
@@ -23,6 +23,39 @@ pipeline {
             }
             }
           }
+            stage('Build') {
+                steps {
+                script {
+                    sh 'echo "Building the application..."'
+                    sh 'mvn package'
+                }
+                }
+            }
+            stage('Build Docker Image') {
+                 when {
+                     branch 'main'
+                      }
+                steps {
+                    script {
+                        sh 'echo "Building Docker image..."'
+                        sh 'docker build -t my-app .'
+                    }
+                }
+            }
+            stage('Push Docker Image') {
+                 when {
+                     branch 'main'
+             }
+                steps {
+                    script {
+                        withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
+                            sh ' docker tag my-app a7medsayed/simple-java-app:${BUILD_NUMBER}'
+                            sh ' docker push a7medsayed/simple-java-app:${BUILD_NUMBER}'
+
+                         }
+                    }
+                }
+            }
   }
   post {
     success {

@@ -56,7 +56,21 @@ pipeline {
                     }
                 }
             }
-          
+            stage('Deploy to EKS') {
+                when {
+                  expression { !env.ghprbPullId }
+               }
+                steps {
+                    script {
+                        withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
+                            sh 'echo "Deploying to EKS..."'
+                            sh 'aws eks update-kubeconfig --region us-east-1 --name my-eks-cluster'
+                            sh 'kubectl apply -f deployment.yaml'
+                            sh 'kubectl apply -f service.yaml'
+                        }
+                    }
+                }
+            }
   }
   post {
     success {

@@ -32,9 +32,9 @@ pipeline {
                 }
             }
             stage('Build Docker Image') {
-                when {
-                 expression { env.BRANCH_NAME == 'main' }
-             } 
+               when {
+                  expression { env.GIT_BRANCH == 'origin/main' }
+               }
                 steps {
                     script {
                         sh 'echo "Building Docker image..."'
@@ -44,7 +44,7 @@ pipeline {
             }
             stage('Push Docker Image') {
                 when {
-                 expression { env.BRANCH_NAME == 'main' }
+                  expression { env.GIT_BRANCH == 'origin/main' }
                }
                 steps {
                     script {

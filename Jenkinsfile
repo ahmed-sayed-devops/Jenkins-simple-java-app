@@ -38,7 +38,7 @@ pipeline {
                 steps {
                     script {
                         sh 'echo "Building Docker image..."'
-                        sh 'docker build -t my-app -f Dockerfile'
+                        sh 'docker build -t my-app .'
                     }
                 }
             }

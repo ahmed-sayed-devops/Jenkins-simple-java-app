@@ -32,9 +32,9 @@ pipeline {
                 }
             }
             stage('Build Docker Image') {
-                 when {
-                     branch 'main'
-                      }
+                when {
+                 expression { env.BRANCH_NAME == 'main' }
+             } 
                 steps {
                     script {
                         sh 'echo "Building Docker image..."'
@@ -43,9 +43,9 @@ pipeline {
                 }
             }
             stage('Push Docker Image') {
-                 when {
-                     branch 'main'
-             }
+                when {
+                 expression { env.BRANCH_NAME == 'main' }
+               }
                 steps {
                     script {
                         withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {

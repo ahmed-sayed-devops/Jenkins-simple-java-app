@@ -33,7 +33,7 @@ pipeline {
             }
             stage('Build Docker Image') {
                when {
-                  expression { env.GIT_BRANCH == 'origin/main' && env.CHANGE_ID == null }
+                  expression { !env.ghprbPullId }
                }
                 steps {
                     script {
@@ -44,7 +44,7 @@ pipeline {
             }
             stage('Push Docker Image') {
                 when {
-                  expression { env.GIT_BRANCH == 'origin/main' && env.CHANGE_ID == null }
+                  expression { !env.ghprbPullId }
                }
                 steps {
                     script {

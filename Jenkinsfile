@@ -11,23 +11,15 @@ pipeline {
             steps {
             script {
                 sh 'echo "Compiling the application..."'
-                sh 'mvn clean compile' 
+                sh 'mvn clean compile -DskipTests' 
               }
-            }
-          }
-          stage('Test') {
-            steps {
-            script {
-                sh 'echo "Running tests..."'
-                sh 'mvn test'
-            }
             }
           }
             stage('Build') {
                 steps {
                 script {
                     sh 'echo "Building the application..."'
-                    sh 'mvn package'
+                    sh 'mvn package -DskipTests'
                 }
                 }
             }

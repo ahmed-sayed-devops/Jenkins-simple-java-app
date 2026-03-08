@@ -1,23 +1,20 @@
 package com.mycompany.app;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@SpringBootApplication
+@RestController
 public class App {
 
-    private final String message = "Jenkins Pipeline Run Successfully";
-    private final String name = "Ahmed Sayed";
-
-    public App() {}
-
     public static void main(String[] args) {
-        App app = new App();
-        System.out.println(app.getMessage());
-        System.out.println(app.getName());
+        SpringApplication.run(App.class, args);
     }
 
-    private String getMessage() {
-        return message;
-    }
-
-    private String getName() {
-        return name;
+    @GetMapping("/")
+    public String home() {
+        return "Jenkins Pipeline Run Successfully\nAhmed Sayed";
     }
 }

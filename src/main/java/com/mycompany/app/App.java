@@ -15,6 +15,7 @@ public class App {
 
     @GetMapping("/")
     public String home() {
-        return "Jenkins Pipeline Run Successfully\nAhmed Sayed";
+        return "<h2>Jenkins Pipeline Run Successfully</h2>"
+             + "<h3>Ahmed Sayed</h3>";
     }
 }
